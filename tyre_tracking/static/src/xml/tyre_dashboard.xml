@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="tyre_tracking.Dashboard" owl="1">
+        <div class="tyre-dashboard">
+            <div class="tyre-bar">
+                <label for="tyre_vehicle" class="fw-bold mb-0">Vehicle</label>
+                <select id="tyre_vehicle" class="form-select tyre-select" t-on-change="onVehicleChange">
+                    <t t-foreach="state.vehicles" t-as="v" t-key="v.id">
+                        <option t-att-value="v.id" t-att-selected="v.id === state.vehicleId">
+                            <t t-esc="v.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+
+            <div t-if="!state.vehicles.length" class="tyre-empty-msg">
+                No vehicles yet. Add one in Fleet, fit tyres under Tyre Tracking › Fitments, then come back.
+            </div>
+
+            <div t-if="state.vehicles.length" class="tyre-body">
+                <div class="tyre-bay">
+                    <div class="tyre-front">▲ Front</div>
+                    <div class="tyre-axle" t-att-class="{'is-active': state.axle === 'front'}">
+                        <button type="button" t-att-class="tyreClass('FL')" t-on-click="() => this.onTyreTouch('FL')" aria-label="Front left tyre">FL</button>
+                        <div class="tyre-beam"><span>Front axle</span></div>
+                        <button type="button" t-att-class="tyreClass('FR')" t-on-click="() => this.onTyreTouch('FR')" aria-label="Front right tyre">FR</button>
+                    </div>
+                    <div class="tyre-axle" t-att-class="{'is-active': state.axle === 'rear'}">
+                        <button type="button" t-att-class="tyreClass('RL')" t-on-click="() => this.onTyreTouch('RL')" aria-label="Rear left tyre">RL</button>
+                        <div class="tyre-beam"><span>Rear axle</span></div>
+                        <button type="button" t-att-class="tyreClass('RR')" t-on-click="() => this.onTyreTouch('RR')" aria-label="Rear right tyre">RR</button>
+                    </div>
+                    <div class="tyre-legend">
+                        <span><i class="dot dot-good"/>Good</span>
+                        <span><i class="dot dot-warning"/>Check soon (60%+ wear)</span>
+                        <span><i class="dot dot-replace"/>Replace (80%+ wear)</span>
+                        <span><i class="dot dot-empty"/>No tyre</span>
+                    </div>
+                </div>
+
+                <div class="tyre-panel" aria-live="polite">
+                    <t t-if="state.loading">
+                        <div class="tyre-hint">Loading axle…</div>
+                    </t>
+                    <t t-elif="state.axle">
+                        <h3 class="mb-1"><t t-esc="state.axle === 'front' ? 'Front axle' : 'Rear axle'"/></h3>
+                        <div t-if="!state.axleTyres.length" class="tyre-hint">No tyres fitted on this axle.</div>
+                        <t t-foreach="state.axleTyres" t-as="t" t-key="t.id">
+                            <div class="tyre-card" t-att-class="{'is-selected': state.selected === t.position}">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <div class="text-muted small" t-esc="t.position_label"/>
+                                        <div class="fw-bold" t-esc="t.serial"/>
+                                    </div>
+                                    <span t-attf-class="tyre-badge badge-{{ t.condition }}" t-esc="t.condition"/>
+                                </div>
+                                <div class="tyre-wear">
+                                    <span>Wear <strong><t t-esc="t.wear"/>%</strong></span>
+                                    <div class="tyre-meter"><div t-attf-class="tyre-meter-fill fill-{{ t.condition }}" t-attf-style="width: {{ Math.min(t.wear, 100) }}%"/></div>
+                                </div>
+                                <div class="tyre-facts">
+                                    <div><small>Brand</small><div t-esc="t.brand or '—'"/></div>
+                                    <div><small>Size</small><div t-esc="t.size or '—'"/></div>
+                                    <div><small>Speed</small><div><t t-esc="t.speed"/> km/h</div></div>
+                                    <div><small>Temp</small><div><t t-esc="t.temperature"/> °C</div></div>
+                                    <div><small>Odometer</small><div><t t-esc="t.odometer"/> km</div></div>
+                                </div>
+                                <button type="button" class="btn btn-link btn-sm ps-0" t-on-click="() => this.openTyre(t.id)">Open tyre</button>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <div class="tyre-hint">Tap a tyre to see every tyre on that axle.</div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

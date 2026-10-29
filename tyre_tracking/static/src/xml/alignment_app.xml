@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="tyre_tracking.AlignmentApp" owl="1">
+        <div class="al-app">
+
+            <!-- Top bar -->
+            <div class="al-top">
+                <button type="button" class="al-top-btn" title="Home" aria-label="Home" t-on-click="goHome"><i class="fa fa-home"/></button>
+                <span t-if="state.jobId" class="al-top-info"><t t-esc="state.jobName"/></span>
+                <button t-if="state.jobId and state.screen === 'wheels'" type="button" class="al-top-link"
+                        t-on-click="() => this.openRecord('tyre.alignment.job', state.jobId)">Enter readings</button>
+            </div>
+
+            <div class="al-screen">
+
+                <!-- 1. Home -->
+                <t t-if="state.screen === 'home'">
+                    <div class="al-home">
+                        <button type="button" class="al-tile al-tile-main" t-on-click="goBegin">
+                            <i class="fa fa-car"/><span>Start alignment</span>
+                        </button>
+                        <div class="al-tile-grid">
+                            <button type="button" class="al-tile" t-on-click="() => this.openList('fleet.vehicle', 'Vehicles')"><i class="fa fa-truck"/><span>Vehicles</span></button>
+                            <button type="button" class="al-tile" t-on-click="() => this.openList('tyre.master', 'Tyres')"><i class="fa fa-life-ring"/><span>Tyres</span></button>
+                            <button type="button" class="al-tile" t-on-click="() => this.openList('res.partner', 'Customers')"><i class="fa fa-user"/><span>Customers</span></button>
+                            <button type="button" class="al-tile" t-on-click="() => this.openList('tyre.alignment.spec', 'Specifications')"><i class="fa fa-pencil-square-o"/><span>Specifications</span></button>
+                            <button type="button" class="al-tile" t-on-click="() => this.openList('tyre.alignment.job', 'Alignment Jobs')"><i class="fa fa-wrench"/><span>Alignment jobs</span></button>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- 2. Begin Alignment -->
+                <t t-elif="state.screen === 'begin'">
+                    <div class="al-begin">
+                        <div class="al-fields">
+                            <div class="al-field">
+                                <label for="al_vehicle">Vehicle</label>
+                                <select id="al_vehicle" class="form-select" t-on-change="onVehicleChange">
+                                    <option value="" t-if="!state.vehicles.length">No vehicles yet</option>
+                                    <t t-foreach="state.vehicles" t-as="v" t-key="v.id">
+                                        <option t-att-value="v.id" t-att-selected="v.id === state.vehicleId"><t t-esc="v.display_name"/></option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="al-field">
+                                <label for="al_spec">Specification</label>
+                                <select id="al_spec" class="form-select" t-on-change="onSpecChange">
+                                    <option value="">No specification</option>
+                                    <t t-foreach="state.specs" t-as="s" t-key="s.id">
+                                        <option t-att-value="s.id" t-att-selected="s.id === state.specId"><t t-esc="s.name"/></option>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="al-choice">
+                            <p>To begin a new alignment:</p>
+                            <button type="button" class="al-choice-btn" t-on-click="() => this.start('new')"><i class="fa fa-file-o"/> New alignment</button>
+                            <span>All previous data will be cleared.</span>
+                        </div>
+                        <div class="al-choice">
+                            <p>To continue an alignment:</p>
+                            <button type="button" class="al-choice-btn" t-on-click="() => this.start('continue')"><i class="fa fa-floppy-o"/> Continue alignment</button>
+                            <span>Current data will be retained.</span>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- 3. Primary Specifications -->
+                <t t-elif="state.screen === 'spec' and state.specTable">
+                    <div class="al-spec">
+                        <div class="al-spec-title">
+                            <t t-esc="state.specTable.name"/><t t-if="state.specTable.wheel_size"> (<t t-esc="state.specTable.wheel_size"/> wheel)</t>
+                        </div>
+                        <table class="al-spec-table">
+                            <t t-foreach="['front', 'rear']" t-as="axle" t-key="axle">
+                                <tr class="al-spec-head">
+                                    <th t-esc="axle === 'front' ? 'Front' : 'Rear'"/>
+                                    <th>Min.</th><th>Pref.</th><th>Max.</th><th>Cross</th><th>Min.</th><th>Pref.</th><th>Max.</th>
+                                </tr>
+                                <t t-foreach="state.specTable[axle]" t-as="row" t-key="row_index">
+                                    <tr t-if="row.per_side">
+                                        <td class="al-spec-label" t-esc="row.label"/>
+                                        <td class="al-y" t-esc="row.has_range ? deg(row.min) : '—'"/>
+                                        <td class="al-g" t-esc="deg(row.pref)"/>
+                                        <td class="al-y" t-esc="row.has_range ? deg(row.max) : '—'"/>
+                                        <td class="al-g" t-esc="row.cross ? deg(row.cross) : ''"/>
+                                        <td class="al-y" t-esc="row.has_range ? deg(row.min) : '—'"/>
+                                        <td class="al-g" t-esc="deg(row.pref)"/>
+                                        <td class="al-y" t-esc="row.has_range ? deg(row.max) : '—'"/>
+                                    </tr>
+                                    <tr t-else="">
+                                        <td class="al-spec-label" t-esc="row.label"/>
+                                        <td/><td/>
+                                        <td class="al-y" t-esc="row.has_range ? deg(row.min) : '—'"/>
+                                        <td class="al-g" t-esc="row.has_range ? deg(row.pref) : '—'"/>
+                                        <td class="al-y" t-esc="row.has_range ? deg(row.max) : '—'"/>
+                                        <td/><td/>
+                                    </tr>
+                                </t>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+
+                <!-- 4. Four Wheel Alignment -->
+                <t t-elif="state.screen === 'wheels' and state.wheels">
+                    <div class="al-wheels-wrap">
+                        <div class="al-bay-scroll">
+                            <div class="al-bay">
+                                <div class="al-ramp al-ramp-left"/>
+                                <div class="al-ramp al-ramp-right"/>
+                                <div class="al-axle al-axle-front"/>
+                                <div class="al-axle al-axle-rear"/>
+                                <div class="al-spine"/>
+                                <div class="al-steer"/>
+                                <div t-attf-class="al-arrow al-arrow-{{ state.wheels.summary }}"><span t-esc="summaryText()"/></div>
+                                <t t-foreach="state.wheels.positions" t-as="w" t-key="w.pos">
+                                    <div t-attf-class="al-wheel al-wheel-{{ w.pos }}">
+                                        <button type="button"
+                                                t-attf-class="al-tyre al-tyre-{{ w.tyre ? w.tyre.condition : 'none' }} {{ state.selected === w.pos ? 'is-selected' : '' }}"
+                                                t-att-aria-label="w.label + ' tyre'"
+                                                t-on-click="() => this.onWheelClick(w.pos)">
+                                            <span class="al-rim"/>
+                                        </button>
+                                        <div class="al-readings">
+                                            <t t-foreach="w.readings" t-as="r" t-key="r.param">
+                                                <div t-attf-class="al-read al-read-{{ r.status }}"><span t-esc="r.label"/><b t-esc="deg(r.value)"/></div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <div class="al-axle-panel" aria-live="polite">
+                            <t t-if="state.loadingAxle">
+                                <div class="al-hint">Loading axle…</div>
+                            </t>
+                            <t t-elif="state.axleInfo">
+                                <h3 class="al-panel-title" t-esc="state.axleInfo.label"/>
+                                <t t-foreach="state.axleInfo.wheels" t-as="w" t-key="w.pos">
+                                    <div class="al-card" t-att-class="{'is-selected': state.selected === w.pos}">
+                                        <div class="al-card-head">
+                                            <span class="al-card-pos" t-esc="w.label"/>
+                                            <span t-if="w.tyre" t-attf-class="al-badge al-badge-{{ w.tyre.condition }}" t-esc="w.tyre.condition"/>
+                                        </div>
+                                        <t t-if="w.tyre">
+                                            <div class="al-card-serial" t-esc="w.tyre.serial"/>
+                                            <div class="al-facts">
+                                                <div><small>Brand</small><div t-esc="w.tyre.brand or '—'"/></div>
+                                                <div><small>Wear</small><div><t t-esc="w.tyre.wear"/>%</div></div>
+                                                <div><small>Temp</small><div><t t-esc="w.tyre.temperature"/> °C</div></div>
+                                                <div><small>Speed</small><div><t t-esc="w.tyre.speed"/> km/h</div></div>
+                                                <div><small>Odometer</small><div><t t-esc="w.tyre.odometer"/> km</div></div>
+                                            </div>
+                                        </t>
+                                        <div t-else="" class="al-hint-small">No tyre fitted at this position.</div>
+                                        <div class="al-card-readings">
+                                            <t t-foreach="w.readings" t-as="r" t-key="r.param">
+                                                <span t-attf-class="al-read al-read-{{ r.status }}"><span t-esc="r.label"/><b t-esc="deg(r.value)"/></span>
+                                            </t>
+                                        </div>
+                                        <button t-if="w.tyre" type="button" class="btn btn-link btn-sm ps-0"
+                                                t-on-click="() => this.openRecord('tyre.master', w.tyre.id)">Open tyre</button>
+                                    </div>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <div class="al-hint">Tap a tyre to see both tyres on that axle with their readings.</div>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="al-bottom">
+                <span class="al-title" t-esc="titles[state.screen]"/>
+                <div class="al-nav">
+                    <button t-if="state.screen !== 'home'" type="button" class="al-nav-btn al-back" aria-label="Back" t-on-click="back"><i class="fa fa-long-arrow-left"/></button>
+                    <button t-if="state.screen === 'spec' or state.screen === 'wheels'" type="button" class="al-nav-btn al-next"
+                            t-att-aria-label="state.screen === 'wheels' ? 'Finish alignment' : 'Next'" t-on-click="next">
+                        <i t-attf-class="fa {{ state.screen === 'wheels' ? 'fa-check' : 'fa-long-arrow-right' }}"/>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

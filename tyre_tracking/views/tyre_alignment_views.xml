@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Machine-style screens: tag must match registry in alignment_app.js -->
+    <record id="action_tyre_alignment_app" model="ir.actions.client">
+        <field name="name">Wheel Alignment</field>
+        <field name="tag">tyre_tracking_alignment</field>
+    </record>
+
+    <record id="view_tyre_alignment_spec_tree" model="ir.ui.view">
+        <field name="name">tyre.alignment.spec.tree</field>
+        <field name="model">tyre.alignment.spec</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="wheel_size"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tyre_alignment_spec_form" model="ir.ui.view">
+        <field name="name">tyre.alignment.spec.form</field>
+        <field name="model">tyre.alignment.spec</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. TOYOTA AVENSIS 2015-2016"/></h1>
+                    </div>
+                    <group>
+                        <field name="wheel_size" placeholder="e.g. 17&quot;"/>
+                    </group>
+                    <field name="line_ids">
+                        <tree editable="bottom">
+                            <field name="axle"/>
+                            <field name="sequence" widget="handle"/>
+                            <field name="parameter"/>
+                            <field name="min_val"/>
+                            <field name="pref_val"/>
+                            <field name="max_val"/>
+                            <field name="cross_val"/>
+                            <field name="has_range"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tyre_alignment_job_tree" model="ir.ui.view">
+        <field name="name">tyre.alignment.job.tree</field>
+        <field name="model">tyre.alignment.job</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="vehicle_id"/>
+                <field name="spec_id"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'measuring'"
+                       decoration-success="state == 'done'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tyre_alignment_job_form" model="ir.ui.view">
+        <field name="name">tyre.alignment.job.form</field>
+        <field name="model">tyre.alignment.job</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_open_alignment" type="object" string="Open alignment screen" class="btn-primary"/>
+                    <button name="action_done" type="object" string="Mark done"
+                            attrs="{'invisible': [('state', '!=', 'measuring')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="measuring,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="vehicle_id"/>
+                            <field name="spec_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <field name="reading_ids">
+                        <tree editable="bottom" create="0" delete="0"
+                              decoration-danger="status == 'out'" decoration-success="status == 'ok'">
+                            <field name="position" readonly="1"/>
+                            <field name="parameter" readonly="1"/>
+                            <field name="value"/>
+                            <field name="status" widget="badge"
+                                   decoration-success="status == 'ok'"
+                                   decoration-danger="status == 'out'"
+                                   decoration-warning="status == 'none'"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_tyre_alignment_spec" model="ir.actions.act_window">
+        <field name="name">Specifications</field>
+        <field name="res_model">tyre.alignment.spec</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_tyre_alignment_job" model="ir.actions.act_window">
+        <field name="name">Alignment Jobs</field>
+        <field name="res_model">tyre.alignment.job</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_tyre_alignment_app" name="Wheel Alignment" parent="menu_tyre_root" action="action_tyre_alignment_app" sequence="0"/>
+    <menuitem id="menu_tyre_alignment_job" name="Alignment Jobs" parent="menu_tyre_root" action="action_tyre_alignment_job" sequence="4"/>
+    <menuitem id="menu_tyre_alignment_spec" name="Specifications" parent="menu_tyre_root" action="action_tyre_alignment_spec" sequence="5"/>
+</odoo>

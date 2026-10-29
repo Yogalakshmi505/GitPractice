@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="spec_toyota_avensis" model="tyre.alignment.spec">
+        <field name="name">TOYOTA AVENSIS 2015-2016</field>
+        <field name="wheel_size">17"</field>
+    </record>
+    <record id="spec_avensis_f_caster" model="tyre.alignment.spec.line">
+        <field name="spec_id" ref="spec_toyota_avensis"/><field name="axle">front</field><field name="parameter">caster</field><field name="sequence">10</field>
+        <field name="min_val">5.25</field><field name="pref_val">6.00</field><field name="max_val">6.75</field><field name="cross_val">0.75</field>
+    </record>
+    <record id="spec_avensis_f_camber" model="tyre.alignment.spec.line">
+        <field name="spec_id" ref="spec_toyota_avensis"/><field name="axle">front</field><field name="parameter">camber</field><field name="sequence">20</field>
+        <field name="min_val">-0.92</field><field name="pref_val">-0.17</field><field name="max_val">0.58</field><field name="cross_val">0.75</field>
+    </record>
+    <record id="spec_avensis_f_sai" model="tyre.alignment.spec.line">
+        <field name="spec_id" ref="spec_toyota_avensis"/><field name="axle">front</field><field name="parameter">sai</field><field name="sequence">30</field>
+        <field name="pref_val">13.08</field><field name="has_range" eval="False"/>
+    </record>
+    <record id="spec_avensis_f_ind_toe" model="tyre.alignment.spec.line">
+        <field name="spec_id" ref="spec_toyota_avensis"/><field name="axle">front</field><field name="parameter">ind_toe</field><field name="sequence">40</field>
+        <field name="min_val">0.00</field><field name="pref_val">0.09</field><field name="max_val">0.17</field>
+    </record>
+    <record id="spec_avensis_f_total_toe" model="tyre.alignment.spec.line">
+        <field name="spec_id" ref="spec_toyota_avensis"/><field name="axle">front</field><field name="parameter">total_toe</field><field name="sequence">50</field>
+        <field name="min_val">0.00</field><field name="pref_val">0.17</field><field name="max_val">0.34</field>
+    </record>
+    <record id="spec_avensis_r_camber" model="tyre.alignment.spec.line">
+        <field name="spec_id" ref="spec_toyota_avensis"/><field name="axle">rear</field><field name="parameter">camber</field><field name="sequence">10</field>
+        <field name="min_val">-1.75</field><field name="pref_val">-1.00</field><field name="max_val">-0.25</field><field name="cross_val">0.75</field>
+    </record>
+    <record id="spec_avensis_r_ind_toe" model="tyre.alignment.spec.line">
+        <field name="spec_id" ref="spec_toyota_avensis"/><field name="axle">rear</field><field name="parameter">ind_toe</field><field name="sequence">20</field>
+        <field name="min_val">-0.05</field><field name="pref_val">0.05</field><field name="max_val">0.13</field>
+    </record>
+    <record id="spec_avensis_r_total_toe" model="tyre.alignment.spec.line">
+        <field name="spec_id" ref="spec_toyota_avensis"/><field name="axle">rear</field><field name="parameter">total_toe</field><field name="sequence">30</field>
+        <field name="min_val">-0.09</field><field name="pref_val">0.09</field><field name="max_val">0.26</field>
+    </record>
+    <record id="spec_avensis_r_thrust" model="tyre.alignment.spec.line">
+        <field name="spec_id" ref="spec_toyota_avensis"/><field name="axle">rear</field><field name="parameter">thrust</field><field name="sequence">40</field>
+        <field name="has_range" eval="False"/>
+    </record>
+</odoo>

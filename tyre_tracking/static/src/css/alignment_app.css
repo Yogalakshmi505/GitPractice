@@ -1,0 +1,135 @@
+/* Colours picked from the alignment machine screens */
+.al-app *, .al-app *::before, .al-app *::after { box-sizing: border-box; }
+.al-app {
+    --al-blue: #8fa7d1;
+    --al-bar: #e9eaee;
+    --al-ramp: #6b6e79;
+    --al-yellow: #f6f26a;
+    --al-green: #7fe07f;
+    --al-red: #e5533d;
+    --al-ok: #2e9e5b;
+    --al-warn: #d99a00;
+    --al-rubber: #24272c;
+    --al-ink: #1d2533;
+    display: flex; flex-direction: column; height: 100%;
+    background: var(--al-blue); color: var(--al-ink);
+}
+
+/* Top and bottom bars */
+.al-top { display: flex; align-items: center; gap: 14px; padding: 6px 14px; background: var(--al-bar); border-bottom: 1px solid #c5ccd8; }
+.al-top-btn { border: 0; background: none; font-size: 22px; color: #3d6fb6; padding: 0 4px; }
+.al-top-info { font-weight: 600; }
+.al-top-link { margin-left: auto; border: 1px solid #3d6fb6; background: #fff; color: #3d6fb6; border-radius: 4px; padding: 2px 10px; font-size: 13px; }
+.al-screen { flex: 1; overflow: auto; padding: 20px; }
+.al-bottom { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; border-top: 1px solid rgba(255, 255, 255, 0.6); }
+.al-title { font-weight: 700; font-size: 15px; }
+.al-nav { display: flex; gap: 8px; }
+.al-nav-btn { width: 64px; height: 30px; border: 2px solid #fff; border-radius: 4px; color: #fff; font-size: 18px; line-height: 1; }
+.al-back { background: var(--al-red); }
+.al-next { background: #2fb04a; }
+.al-nav-btn:focus-visible, .al-tile:focus-visible, .al-choice-btn:focus-visible, .al-tyre:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+/* 1. Home */
+.al-home { display: flex; flex-wrap: wrap; align-items: center; gap: 48px; padding: 40px 20px; }
+.al-tile { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    width: 104px; height: 104px; border: 0; border-radius: 16px;
+    background: linear-gradient(#fdfdfd, #c9ccd3); box-shadow: 0 3px 0 rgba(0, 0, 0, 0.25); color: var(--al-ink); }
+.al-tile i { font-size: 36px; color: #3d6fb6; }
+.al-tile span { font-size: 12px; font-weight: 600; }
+.al-tile:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25); }
+.al-tile-main { width: 170px; height: 150px; }
+.al-tile-main i { font-size: 72px; color: #c0392b; }
+.al-tile-grid { display: grid; grid-template-columns: repeat(3, 104px); gap: 26px; }
+
+/* 2. Begin */
+.al-begin { max-width: 640px; }
+.al-fields { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 36px; }
+.al-field { display: flex; flex-direction: column; gap: 4px; min-width: 240px; }
+.al-field label { font-weight: 600; }
+.al-choice { margin-bottom: 48px; }
+.al-choice p { margin: 0 0 8px; }
+.al-choice-btn { border: 0; border-bottom: 2px solid var(--al-ink); background: none; padding: 4px 18px 6px 0; font-weight: 600; margin-right: 16px; }
+.al-choice-btn i { color: #2f7a3a; font-size: 18px; margin-right: 6px; }
+
+/* 3. Specifications */
+.al-spec { background: #fff; max-width: 900px; border: 1px solid #b9c3d6; }
+.al-spec-title { background: #1f2bd6; color: #fff; padding: 4px 10px; font-weight: 600; }
+.al-spec-table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.al-spec-table th, .al-spec-table td { border: 1px solid #c8cfdb; padding: 3px 8px; text-align: center; }
+.al-spec-head th { background: #dfe4ee; }
+.al-spec-head th:first-child, .al-spec-label { text-align: left; min-width: 130px; }
+.al-y { background: var(--al-yellow); }
+.al-g { background: var(--al-green); }
+
+/* 4. Four wheel bay */
+.al-wheels-wrap { display: grid; grid-template-columns: minmax(600px, 760px) minmax(280px, 1fr); gap: 20px; align-items: start; }
+.al-bay-scroll { overflow-x: auto; }
+.al-bay { position: relative; height: 500px; min-width: 600px; }
+.al-ramp { position: absolute; top: 10px; bottom: 10px; width: 13%; background: var(--al-ramp); }
+.al-ramp-left { left: 23%; transform: skewX(-2deg); }
+.al-ramp-right { left: 64%; transform: skewX(2deg); }
+.al-axle { position: absolute; left: 30%; width: 41%; height: 6px; background: #d5d9e0; }
+.al-axle-front { top: 103px; }
+.al-axle-rear { top: 383px; }
+.al-spine { position: absolute; left: calc(50.5% - 3px); top: 103px; height: 286px; width: 6px; background: #d5d9e0; }
+.al-steer { position: absolute; left: calc(50.5% - 24px); top: 120px; width: 48px; height: 48px; border: 6px solid #2b2e35; border-radius: 50%; background: #fff; }
+.al-arrow { position: absolute; left: calc(50.5% - 55px); top: 200px; width: 110px; height: 150px; display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 54px; text-align: center; font-size: 11px; font-weight: 700; color: #fff;
+    clip-path: polygon(30% 0, 70% 0, 70% 55%, 100% 55%, 50% 100%, 0 55%, 30% 55%); }
+.al-arrow span { max-width: 60px; }
+.al-arrow-ok { background: #2fd14a; }
+.al-arrow-out { background: var(--al-red); }
+.al-arrow-nospec { background: #9aa3b2; }
+
+.al-wheel { position: absolute; display: flex; align-items: center; gap: 12px; }
+.al-wheel-FL { left: 29.5%; top: 50px; flex-direction: row-reverse; transform: translateX(calc(-100% + 56px)); }
+.al-wheel-RL { left: 29.5%; top: 330px; flex-direction: row-reverse; transform: translateX(calc(-100% + 56px)); }
+.al-wheel-FR { left: 66.5%; top: 50px; }
+.al-wheel-RR { left: 66.5%; top: 330px; }
+
+.al-tyre { position: relative; width: 56px; height: 112px; border: 0; border-radius: 14px; cursor: pointer;
+    background: repeating-linear-gradient(0deg, var(--al-rubber) 0 8px, #3a3e46 8px 11px);
+    box-shadow: 0 0 0 4px var(--al-ok); transition: transform 0.15s ease; }
+.al-rim { position: absolute; top: 18%; bottom: 18%; left: 38%; right: 38%; border-radius: 4px; background: #c7ccd4; }
+.al-tyre-good { box-shadow: 0 0 0 4px var(--al-ok); }
+.al-tyre-warning { box-shadow: 0 0 0 4px var(--al-warn); }
+.al-tyre-replace { box-shadow: 0 0 0 4px var(--al-red); }
+.al-tyre-none { box-shadow: 0 0 0 4px #fff; }
+.al-tyre:hover { transform: scale(1.04); }
+.al-tyre.is-selected { transform: scale(1.1); outline: 3px solid #fff; outline-offset: 6px; }
+
+.al-readings { display: flex; flex-direction: column; gap: 4px; min-width: 112px; }
+.al-read { display: flex; justify-content: space-between; gap: 8px; padding: 2px 8px; font-size: 12px; border: 1px solid rgba(0, 0, 0, 0.2); font-variant-numeric: tabular-nums; }
+.al-read b { font-weight: 700; }
+.al-read-ok { background: var(--al-green); }
+.al-read-out { background: var(--al-red); color: #fff; }
+.al-read-none { background: var(--al-yellow); }
+
+/* Axle panel */
+.al-axle-panel { background: #fff; border: 1px solid #b9c3d6; border-radius: 6px; padding: 16px; min-height: 220px; }
+.al-hint { color: #5a6578; text-align: center; padding: 40px 0; }
+.al-hint-small { color: #5a6578; font-size: 13px; margin: 6px 0; }
+.al-panel-title { font-size: 18px; margin: 0 0 6px; }
+.al-card { border: 1px solid #dde3ec; border-left-width: 4px; border-radius: 6px; padding: 10px 12px; margin-top: 10px; }
+.al-card.is-selected { border-left-color: var(--al-ink); background: #f7f9fc; }
+.al-card-head { display: flex; justify-content: space-between; align-items: center; }
+.al-card-pos { font-size: 12px; color: #5a6578; }
+.al-card-serial { font-weight: 700; font-size: 15px; margin: 2px 0 6px; }
+.al-badge { color: #fff; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 10px; text-transform: capitalize; }
+.al-badge-good { background: var(--al-ok); }
+.al-badge-warning { background: var(--al-warn); }
+.al-badge-replace { background: var(--al-red); }
+.al-facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 4px 12px; font-size: 13px; }
+.al-facts small { color: #5a6578; }
+.al-card-readings { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+@media (max-width: 1100px) {
+    .al-wheels-wrap { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .al-tyre { transition: none; }
+}
+
+/* Arrow text inside the shaft */
+.al-arrow { align-items: flex-start; padding: 12px 0 0; }
+.al-arrow span { max-width: 44px; font-size: 10px; line-height: 1.2; }
