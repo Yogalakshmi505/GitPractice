@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Phone friendly cards. Odoo 16 opens kanban on small screens automatically. -->
+    <record id="view_tyre_master_kanban" model="ir.ui.view">
+        <field name="name">tyre.master.kanban</field>
+        <field name="model">tyre.master</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="brand"/>
+                <field name="vehicle_id"/>
+                <field name="position"/>
+                <field name="wear_level"/>
+                <field name="condition"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="d-flex justify-content-between">
+                                <strong><field name="name"/></strong>
+                                <field name="condition" widget="badge"/>
+                            </div>
+                            <div><field name="brand"/> | Wear <field name="wear_level"/>%</div>
+                            <div class="text-muted"><field name="vehicle_id"/> <field name="position"/></div>
+                            <div><field name="state" widget="badge"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_tyre_fitment_kanban" model="ir.ui.view">
+        <field name="name">tyre.fitment.kanban</field>
+        <field name="model">tyre.fitment</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="tyre_id"/>
+                <field name="vehicle_id"/>
+                <field name="position"/>
+                <field name="fitment_date"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="d-flex justify-content-between">
+                                <strong><field name="tyre_id"/></strong>
+                                <field name="position" widget="badge"/>
+                            </div>
+                            <div class="text-muted"><field name="vehicle_id"/></div>
+                            <div><field name="fitment_date"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_tyre_alignment_job_kanban" model="ir.ui.view">
+        <field name="name">tyre.alignment.job.kanban</field>
+        <field name="model">tyre.alignment.job</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="spec_id"/>
+                <field name="date"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="d-flex justify-content-between">
+                                <strong><field name="name"/></strong>
+                                <field name="state" widget="badge"/>
+                            </div>
+                            <div class="text-muted"><field name="vehicle_id"/></div>
+                            <div><field name="spec_id"/></div>
+                            <div class="small"><field name="date"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_tyre_alignment_spec_kanban" model="ir.ui.view">
+        <field name="name">tyre.alignment.spec.kanban</field>
+        <field name="model">tyre.alignment.spec</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="wheel_size"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div class="text-muted">Wheel: <field name="wheel_size"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

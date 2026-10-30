@@ -90,11 +90,9 @@
                                     </tr>
                                     <tr t-else="">
                                         <td class="al-spec-label" t-esc="row.label"/>
-                                        <td/><td/>
                                         <td class="al-y" t-esc="row.has_range ? deg(row.min) : '—'"/>
                                         <td class="al-g" t-esc="row.has_range ? deg(row.pref) : '—'"/>
                                         <td class="al-y" t-esc="row.has_range ? deg(row.max) : '—'"/>
-                                        <td/><td/>
                                     </tr>
                                 </t>
                             </t>
@@ -132,7 +130,7 @@
                             </div>
                         </div>
 
-                        <div class="al-axle-panel" aria-live="polite">
+                        <div class="al-axle-panel" t-ref="axlePanel" aria-live="polite">
                             <t t-if="state.loadingAxle">
                                 <div class="al-hint">Loading axle…</div>
                             </t>

@@ -104,13 +104,13 @@
     <record id="action_tyre_master" model="ir.actions.act_window">
         <field name="name">Tyres</field>
         <field name="res_model">tyre.master</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
     </record>
 
     <record id="action_tyre_fitment" model="ir.actions.act_window">
         <field name="name">Fitments</field>
         <field name="res_model">tyre.fitment</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
     </record>
 
     <menuitem id="menu_tyre_root" name="Tyre Tracking" parent="mrp.menu_mrp_root" sequence="45"/>

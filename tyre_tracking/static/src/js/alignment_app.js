@@ -1,5 +1,5 @@
 /** @odoo-module **/
-import { Component, onWillStart, useState } from "@odoo/owl";
+import { Component, onWillStart, useRef, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 
@@ -16,6 +16,8 @@ export class AlignmentApp extends Component {
         this.actionService = useService("action");
         this.notification = useService("notification");
         this.titles = TITLES;
+        this.panelRef = useRef("axlePanel");
+        this.panelRef = useRef("axlePanel");
         this.state = useState({
             screen: "home",
             vehicles: [],
@@ -59,7 +61,7 @@ export class AlignmentApp extends Component {
             type: "ir.actions.act_window",
             name,
             res_model: model,
-            views: [[false, "list"], [false, "form"]],
+            views: [[false, "list"], [false, "kanban"], [false, "form"]],
             target: "current",
         });
     }
@@ -142,6 +144,8 @@ export class AlignmentApp extends Component {
     // Tyre touch -> both tyres on that axle with their readings
     async onWheelClick(position) {
         this.state.selected = position;
+        this.scrollToPanel();
+        this.scrollToPanel();
         const axle = position.startsWith("F") ? "front" : "rear";
         if (this.state.axleInfo && this.state.axleInfo.axle === axle) {
             return;
@@ -154,6 +158,32 @@ export class AlignmentApp extends Component {
         } finally {
             this.state.loadingAxle = false;
         }
+    }
+
+    // Phones: bring the axle panel into view after a tyre tap
+    scrollToPanel() {
+        if (window.innerWidth > 700) {
+            return;
+        }
+        setTimeout(() => {
+            const el = this.panelRef.el;
+            if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+        }, 80);
+    }
+
+    // Phones: bring the axle panel into view after a tyre tap
+    scrollToPanel() {
+        if (window.innerWidth > 700) {
+            return;
+        }
+        setTimeout(() => {
+            const el = this.panelRef.el;
+            if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+        }, 80);
     }
 
     // ---------- bottom bar ----------

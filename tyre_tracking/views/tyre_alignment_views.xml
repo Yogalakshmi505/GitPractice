@@ -105,13 +105,13 @@
     <record id="action_tyre_alignment_spec" model="ir.actions.act_window">
         <field name="name">Specifications</field>
         <field name="res_model">tyre.alignment.spec</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
     </record>
 
     <record id="action_tyre_alignment_job" model="ir.actions.act_window">
         <field name="name">Alignment Jobs</field>
         <field name="res_model">tyre.alignment.job</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
     </record>
 
     <menuitem id="menu_tyre_alignment_app" name="Wheel Alignment" parent="menu_tyre_root" action="action_tyre_alignment_app" sequence="0"/>

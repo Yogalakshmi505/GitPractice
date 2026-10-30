@@ -133,3 +133,81 @@
 /* Arrow text inside the shaft */
 .al-arrow { align-items: flex-start; padding: 12px 0 0; }
 .al-arrow span { max-width: 44px; font-size: 10px; line-height: 1.2; }
+
+/* ---------- Mobile / small screens ---------- */
+@media (max-width: 700px) {
+    .al-screen { padding: 10px; }
+    .al-home { gap: 24px; padding: 16px 0; justify-content: center; }
+    .al-tile-grid { grid-template-columns: repeat(2, 104px); gap: 16px; }
+    .al-spec { overflow-x: auto; }
+    .al-spec-table { min-width: 620px; }
+    .al-fields { flex-direction: column; }
+    .al-field { min-width: 0; }
+    .al-choice-btn { display: inline-block; margin-bottom: 6px; }
+    .al-bay-scroll { overflow-x: hidden; }
+}
+/* Shrink the whole four-wheel bay so all 4 tyres fit the phone width */
+@media (max-width: 620px) { .al-bay { zoom: 0.85; } }
+@media (max-width: 520px) { .al-bay { zoom: 0.72; } }
+@media (max-width: 440px) { .al-bay { zoom: 0.6; } }
+@media (max-width: 390px) { .al-bay { zoom: 0.55; } }
+
+/* Spec table: labels left, compact on phones */
+.al-spec-table td.al-spec-label { text-align: left; }
+@media (max-width: 700px) {
+    .al-spec-table { min-width: 0; font-size: 12px; }
+    .al-spec-table th, .al-spec-table td { padding: 3px 5px; }
+    .al-spec-table td.al-spec-label { min-width: 0; }
+    /* Right-wheel columns repeat the left values, so hide them on phones */
+    .al-spec-table tr > :nth-child(n+6) { display: none; }
+}
+
+/* Axle panel: compact cards on phones */
+@media (max-width: 700px) {
+    .al-axle-panel { padding: 10px; min-height: 0; scroll-margin-bottom: 70px; }
+    .al-panel-title { font-size: 16px; }
+    .al-card { padding: 8px 10px; margin-top: 8px; }
+    .al-card-serial { font-size: 14px; margin: 0 0 4px; }
+    .al-facts { grid-template-columns: repeat(3, 1fr); gap: 2px 8px; font-size: 12px; }
+    .al-card-readings { margin-top: 6px; }
+    .al-hint { padding: 16px 0; }
+}
+
+/* ---------- Mobile / small screens ---------- */
+@media (max-width: 700px) {
+    .al-screen { padding: 10px; }
+    .al-home { gap: 24px; padding: 16px 0; justify-content: center; }
+    .al-tile-grid { grid-template-columns: repeat(2, 104px); gap: 16px; }
+    .al-spec { overflow-x: auto; }
+    .al-spec-table { min-width: 620px; }
+    .al-fields { flex-direction: column; }
+    .al-field { min-width: 0; }
+    .al-choice-btn { display: inline-block; margin-bottom: 6px; }
+    .al-bay-scroll { overflow-x: hidden; }
+}
+/* Shrink the whole four-wheel bay so all 4 tyres fit the phone width */
+@media (max-width: 620px) { .al-bay { zoom: 0.85; } }
+@media (max-width: 520px) { .al-bay { zoom: 0.72; } }
+@media (max-width: 440px) { .al-bay { zoom: 0.6; } }
+@media (max-width: 390px) { .al-bay { zoom: 0.55; } }
+
+/* Spec table: labels left, compact on phones */
+.al-spec-table td.al-spec-label { text-align: left; }
+@media (max-width: 700px) {
+    .al-spec-table { min-width: 0; font-size: 12px; }
+    .al-spec-table th, .al-spec-table td { padding: 3px 5px; }
+    .al-spec-table td.al-spec-label { min-width: 0; }
+    /* Right-wheel columns repeat the left values, so hide them on phones */
+    .al-spec-table tr > :nth-child(n+6) { display: none; }
+}
+
+/* Axle panel: compact cards on phones */
+@media (max-width: 700px) {
+    .al-axle-panel { padding: 10px; min-height: 0; scroll-margin-bottom: 70px; }
+    .al-panel-title { font-size: 16px; }
+    .al-card { padding: 8px 10px; margin-top: 8px; }
+    .al-card-serial { font-size: 14px; margin: 0 0 4px; }
+    .al-facts { grid-template-columns: repeat(3, 1fr); gap: 2px 8px; font-size: 12px; }
+    .al-card-readings { margin-top: 6px; }
+    .al-hint { padding: 16px 0; }
+}

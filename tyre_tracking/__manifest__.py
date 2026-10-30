@@ -10,6 +10,7 @@
         'views/tyre_dashboard_views.xml',
         'views/tyre_menus.xml',
         'views/tyre_alignment_views.xml',
+        'views/tyre_kanban_views.xml',
         'data/alignment_spec_data.xml',
     ],
     'assets': {
